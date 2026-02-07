@@ -10,11 +10,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Menu } from "lucide-react";
+import { LogIn, Menu } from "lucide-react";
 import { Button } from '@/components/ui/button';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const session = null;
 
   const navItems = [
     { href: "#profissionais", label: "Profissionais" },
@@ -29,11 +31,25 @@ export function Header() {
           asChild
           className="bg-transparent hover:bg-transparent text-black shadow-none"
         >
-          <Link href={item.href}>
+          <Link href={item.href} className='text-base'>
             {item.label}
           </Link>
         </Button>
       ))}
+
+      {session ? (
+        <Link
+        href="/dashboard"
+        className='flex items-center justify-center gap-2'
+        >
+          Acessar clínica
+        </Link>
+      ) : (
+        <Button>
+          <LogIn />
+          Portal da clínica
+        </Button>
+      )}
     </>
   )
   
@@ -65,14 +81,14 @@ export function Header() {
           </SheetTrigger>
 
           <SheetContent side="right" className="w-[240px] sm:w-[300px] z-[9999]">
-            <SheetTitle>Menu</SheetTitle>
+            <SheetHeader>Menu</SheetHeader>
             {/* <SheetHeader></SheetHeader> */}
 
-            <SheetDescription>
+            <SheetDescription className='ps-4'>
               Veja nossos links
             </SheetDescription>
 
-            <nav className='flex flex-col space-y-4 mt-6'>
+            <nav className='flex flex-col space-y-2 mt-0 px-6'>
               <NavLinks />
             </nav>
 
