@@ -10,8 +10,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Button } from "../../../components/ui/button";
 import { LogIn, Menu } from "lucide-react";
-import { Button } from '@/components/ui/button';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,20 +39,22 @@ export function Header() {
 
       {session ? (
         <Link
-        href="/dashboard"
-        className='flex items-center justify-center gap-2'
+          href="/dashboard"
+          className='flex items-center justify-center gap-2'
         >
-          Acessar clínica
+          Acessar clinica
         </Link>
       ) : (
         <Button>
           <LogIn />
-          Portal da clínica
+          Portal da clinica
         </Button>
       )}
     </>
   )
-  
+
+
+
   return (
     <header
       className="fixed top-0 right-0 left-0 z-[999] py-4 px-6 bg-white"
@@ -81,14 +83,14 @@ export function Header() {
           </SheetTrigger>
 
           <SheetContent side="right" className="w-[240px] sm:w-[300px] z-[9999]">
-            <SheetHeader>Menu</SheetHeader>
-            {/* <SheetHeader></SheetHeader> */}
+            <SheetTitle>Menu</SheetTitle>
+            <SheetHeader></SheetHeader>
 
-            <SheetDescription className='ps-4'>
+            <SheetDescription>
               Veja nossos links
             </SheetDescription>
 
-            <nav className='flex flex-col space-y-2 mt-0 px-6'>
+            <nav className='flex flex-col space-y-4 mt-6'>
               <NavLinks />
             </nav>
 
