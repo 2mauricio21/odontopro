@@ -82,10 +82,10 @@ model User {
   email               String    @unique
   emailVerified       DateTime?
   image               String?
-  adress              String?   @default("")
+  address              String?   @default("")
   phone               String?   @default("")
   status              Boolean?  @default(true)
-  timezone            String?
+  timeZone            String?
   striper_customer_id String?   @default("")
   times               String[]  @default([])
 
