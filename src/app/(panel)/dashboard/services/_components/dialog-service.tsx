@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { convertRealToCents } from "@/utils/convertCurrency";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { createNewService } from "../_actions/create-service";
@@ -30,6 +31,7 @@ interface DialogServiceProps {
 export function DialogService({ closeModal }: DialogServiceProps) {
   const form = useDialogServiceForm();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   async function onSubmit(values: DialogServiceFormData) {
     setLoading(true);
@@ -55,6 +57,7 @@ export function DialogService({ closeModal }: DialogServiceProps) {
 
     toast.success("Serviço cadastrado com sucesso");
     handleCloseModal();
+    router.refresh();
   }
 
   function handleCloseModal() {
