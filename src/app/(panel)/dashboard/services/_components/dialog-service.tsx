@@ -1,8 +1,5 @@
 "use client";
 
-// - Valor em centavos = Valor em reais * 100
-// - Valor em reais = Valor em centavos / 100
-
 import { Button } from "@/components/ui/button";
 import {
   DialogDescription,
@@ -18,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { convertRealToCents } from "@/utils/convertCurrency";
 import {
   DialogServiceFormData,
   useDialogServiceForm,
@@ -27,7 +25,9 @@ export function DialogService() {
   const form = useDialogServiceForm();
 
   async function onSubmit(values: DialogServiceFormData) {
-    console.log(values);
+    const priceInCents = convertRealToCents(values.price);
+
+    console.log(priceInCents);
   }
 
   function changeCurrency(event: React.ChangeEvent<HTMLInputElement>) {
