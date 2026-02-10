@@ -1,26 +1,5 @@
 "use client";
-import { useState } from "react";
-import { ProfileFormData, useProfileForm } from "./profile-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -29,16 +8,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Image from "next/image";
+import { useState } from "react";
+import { ProfileFormData, useProfileForm } from "./profile-form";
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
-import imgTest from "../../../../../../public/foto1.png";
-import { cn } from "@/lib/utils";
 import { Prisma } from "@/generated/prisma/client";
-import { updateProfile } from "../_actions/update-profile";
-import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 import { formatPhone } from "@/utils/formatPhone";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import imgTest from "../../../../../../public/foto1.png";
+import { updateProfile } from "../_actions/update-profile";
 
 type UserWithSubscription = Prisma.UserGetPayload<{
   include: {
@@ -51,10 +52,12 @@ interface ProfileContentProps {
 }
 
 export function ProfileContent({ user }: ProfileContentProps) {
+  const router = useRouter();
   const [selectedHours, setSelectedHours] = useState<string[]>(
     user.times ?? [],
   );
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const { update } = useSession();
 
   const form = useProfileForm({
     name: user.name,
@@ -116,6 +119,12 @@ export function ProfileContent({ user }: ProfileContentProps) {
     }
 
     toast.success(response.data);
+  }
+
+  async function handleLogout() {
+    await signOut();
+    await update();
+    router.replace("/");
   }
 
   return (
@@ -326,6 +335,12 @@ export function ProfileContent({ user }: ProfileContentProps) {
           </Card>
         </form>
       </Form>
+
+      <section>
+        <Button className="mt-4" variant="destructive" onClick={handleLogout}>
+          Sair da conta
+        </Button>
+      </section>
     </div>
   );
 }
