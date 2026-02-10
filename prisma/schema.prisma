@@ -18,7 +18,7 @@ model Appointment {
   name            String
   email           String
   phone           String
-  appointmentData DateTime
+  appointmentDate DateTime
   time            String
 
   serviceId String
